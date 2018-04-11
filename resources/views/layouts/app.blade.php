@@ -49,13 +49,15 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
-                                                    
+                            
+                            <?php $image = "/uploads/".Auth::user()->image; ?>                 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    <img src="{{asset($image) }}" width="30" height="30"> {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
                                     <a class="dropdown-item" href="/user/{{Auth::user()->id}}">
                                         {{ __('Profile') }}
                                     </a>
@@ -76,7 +78,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4">           
             @yield('content')
         </main>
     </div>
@@ -106,7 +108,7 @@
             render: {
                 option: function(item, escape) {
                     //return '<div><img src="'+ item.icon +'">' +escape(item.name)+'</div>';
-                    return '<div><a href="'+ item.id +'">' +escape(item.name)+'</div>';
+                    return '<div><img src="/uploads/'+ item.image +'" width="30" height="30"><a href="'+ item.id +'">' + escape(item.name) +'</div>';
 
                 }
             },

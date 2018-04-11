@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use Illuminate\Http\Request;
+
+
 class RegisterController extends Controller
 {
     /*
@@ -40,6 +43,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function __contruct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -52,6 +61,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'image' => 'required|mimes:jpg,jpeg,png'
         ]);
     }
 
@@ -63,10 +73,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $path = $data['image']->store('images');
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'image' => $path
         ]);
     }
 }

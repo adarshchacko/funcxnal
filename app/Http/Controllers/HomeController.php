@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(Auth::check()){
+            $old_file = storage_path('app/').Auth::user()->image;
+            $contents = file_get_contents($old_file);
+            
+            Storage::disk('uploads')->put(Auth::user()->image, $contents);
+        }
         return view('home');
     }
 }

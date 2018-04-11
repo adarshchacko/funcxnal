@@ -35,26 +35,10 @@ class ApiController extends Controller
 			->where('id', '!=', Auth::user()->id)
 			->orderBy('name','asc')
 			->take(5)
-			->get(array('id','name','email'))->toArray();
-
-		// Data normalization
-		/*$categories = $this->appendValue($categories, url('img/icons/category-icon.png'),'icon');
-
-		$products 	= $this->appendURL($products, 'products');
-		$categories  = $this->appendURL($categories, 'categories');
-
-		// Add type of data to each item of each set of results
-		$products = $this->appendValue($products, 'product', 'class');
-		$categories = $this->appendValue($categories, 'category', 'class');
-
-		// Merge all data into one array
-		$data = array_merge($products, $categories);*/
+			->get(array('id','name','email', 'image'))->toArray();
 
 		$users = $this->appendURL($users, 'user');
 		$users = $this->appendValue($users, 'user', 'class');
-
-		//$data = $users;
-
 
 		return response()->json(array(
 			'data'=>$users
